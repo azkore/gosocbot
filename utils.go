@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+	"math/rand"
 )
 
 const (
@@ -49,6 +50,6 @@ func randomCatSender(bot *margelet.Margelet) {
 		for _, chatID := range bot.ChatRepository.All() {
 			go sendCat(chatID, bot)
 		}
-		time.Sleep(5 * time.Minute)
+		time.Sleep(time.Duration(rand.Intn(59)+1) * time.Minute)
 	}
 }
