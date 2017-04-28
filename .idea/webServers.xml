@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a71c6296-61ce-4b75-82a8-0f97673218f3" name="mya.us.to" url="http://mya.us.to">
+        <fileTransfer host="mya.us.to" port="22" privateKey="C:\Users\az\.ssh\id_rsa" rootFolder="/home/tg" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
