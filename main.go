@@ -14,7 +14,7 @@ func main() {
 	_, err := toml.DecodeFile("config.toml", &conf)
 	checkErr(err)
 
-	fmt.Println(conf)
+	fmt.Println("Bot started.")
 
 	bot, err := margelet.NewMargelet(conf.BOT.BotName, conf.REDIS.Address, conf.REDIS.Password,
 		conf.REDIS.Db, conf.BOT.ApiKey, false)
