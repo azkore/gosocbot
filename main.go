@@ -22,6 +22,7 @@ func main() {
 
 	bot.AddCommandHandler("cat", CatHandler{})
 	bot.AddCommandHandler("котейка", CatHandler{})
+	bot.AddCommandHandler("lissajous", LissajousHandler{})
 	bot.AddSessionHandler("start", ConfigSessionHandler{})
 
 	go randomCatSender(bot)
