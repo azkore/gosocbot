@@ -51,14 +51,12 @@ func lissajous(out io.Writer) {
 	phase := 0.0 // phase difference
 	for i := 0; i < nframes; i++ {
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
+		b := make([]byte, 3)
+		rand.Read(b)
+
 		palette := []color.Color{
 			color.Black,
-			color.RGBA{
-				rand_uint8(),
-				rand_uint8(),
-				rand_uint8(),
-				0xff,
-			},
+			color.RGBA{R: b[0], G: b[1], B: b[2], A: 1},
 		}
 		img := image.NewPaletted(rect, palette)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
