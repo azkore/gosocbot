@@ -24,7 +24,6 @@ func (handler LissajousHandler) HandleCommand(message margelet.Message) error {
 
 	msg := tgbotapi.NewVideoUpload(message.Message().Chat.ID,
 		tgbotapi.FileBytes{"lissajous.gif", buffer.Bytes()})
-	msg.ChatID = message.Message().Chat.ID
 	msg.ReplyToMessageID = message.Message().MessageID
 
 	message.Bot().Send(msg)
