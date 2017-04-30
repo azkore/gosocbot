@@ -1,22 +1,16 @@
 package main
 
 import (
-	"io"
-	"image/color"
-	"image/gif"
-	"image"
-	"math"
-	"math/rand"
+	"bytes"
 	"github.com/zhulik/margelet"
 	"gopkg.in/telegram-bot-api.v4"
-	"bytes"
+	"image"
+	"image/color"
+	"image/gif"
+	"io"
+	"math"
+	"math/rand"
 	"time"
-)
-
-var palette = []color.Color{color.White, color.Black}
-const (
-	whiteIndex = 0 // first color in palette
-	blackIndex = 1 // next color in palette
 )
 
 type LissajousHandler struct {
@@ -42,7 +36,6 @@ func (responder LissajousHandler) HelpMessage() string {
 	return "Send Lissajous figure"
 }
 
-
 func lissajous(out io.Writer) {
 	rand.Seed(time.Now().UTC().UnixNano())
 
@@ -50,7 +43,7 @@ func lissajous(out io.Writer) {
 		cycles  = 5     // number of complete x oscillator revolutions
 		res     = 0.001 // angular resolution
 		size    = 100   // image canvas covers [-size..+size]
-		nframes = 128    // number of animation frames
+		nframes = 128   // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
 	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
@@ -58,12 +51,21 @@ func lissajous(out io.Writer) {
 	phase := 0.0 // phase difference
 	for i := 0; i < nframes; i++ {
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
+		palette := []color.Color{
+			color.Black,
+			color.RGBA{
+				rand_uint8(),
+				rand_uint8(),
+				rand_uint8(),
+				0xff,
+			},
+		}
 		img := image.NewPaletted(rect, palette)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
 			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-				blackIndex)
+				1)
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)

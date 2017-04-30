@@ -53,3 +53,7 @@ func randomCatSender(bot *margelet.Margelet) {
 		time.Sleep(time.Duration(rand.Intn(59)+1) * time.Minute)
 	}
 }
+
+func rand_uint8() uint8{
+	return uint8(rand.Intn(256))
+}
