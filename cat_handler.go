@@ -47,6 +47,6 @@ func randomCatSender(bot *margelet.Margelet) {
 				go sendCat(chatID, bot)
 			}
 		}
-		time.Sleep(time.Duration(rand.Intn(59)+1) * time.Second)
+		time.Sleep(time.Duration(rand.Intn(59)+1) * time.Minute)
 	}
 }
