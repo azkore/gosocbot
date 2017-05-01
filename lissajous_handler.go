@@ -16,14 +16,14 @@ import (
 type LissajousHandler struct {
 }
 
-func (handler LissajousHandler) HandleCommand(message margelet.Message) error {
+func (h LissajousHandler) HandleCommand(message margelet.Message) error {
 	var buffer bytes.Buffer
 	message.SendUploadPhotoAction()
 
 	lissajous(&buffer)
 
 	msg := tgbotapi.NewVideoUpload(message.Message().Chat.ID,
-		tgbotapi.FileBytes{"lissajous.gif", buffer.Bytes()})
+		tgbotapi.FileBytes{Name: "lissajous.gif", Bytes: buffer.Bytes()})
 	msg.ReplyToMessageID = message.Message().MessageID
 
 	message.Bot().Send(msg)
@@ -31,7 +31,7 @@ func (handler LissajousHandler) HandleCommand(message margelet.Message) error {
 	return nil
 }
 
-func (responder LissajousHandler) HelpMessage() string {
+func (h LissajousHandler) HelpMessage() string {
 	return "Send Lissajous figure"
 }
 
