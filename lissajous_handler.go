@@ -44,25 +44,30 @@ func lissajous(out io.Writer) {
 		size    = 100   // image canvas covers [-size..+size]
 		nframes = 128   // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
+		maxcolors = 16  // max number of colors in the palette
 	)
+	ncolors := rand.Intn(maxcolors-2)+2
+	palette := make([]color.Color, ncolors)
+	b := make([]byte, 3)
+	for i := 0; i < ncolors; i++ {
+		palette[i] = color.RGBA{R: b[0], G: b[1], B: b[2], A: 1}
+		rand.Read(b)
+	}
 	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
 	for i := 0; i < nframes; i++ {
+		colorIndex := 1;
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
-		b := make([]byte, 3)
-		rand.Read(b)
-
-		palette := []color.Color{
-			color.Black,
-			color.RGBA{R: b[0], G: b[1], B: b[2], A: 1},
-		}
 		img := image.NewPaletted(rect, palette)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-				1)
+			colorIndex++;
+			if colorIndex == ncolors {
+				colorIndex = 1
+			}
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), uint8(colorIndex))
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
